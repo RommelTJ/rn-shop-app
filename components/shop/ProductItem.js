@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, Image, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Button, StyleSheet, TouchableOpacity, Platform, TouchableNativeFeedback } from 'react-native';
 import Colors from "../../constants/Colors";
 
 const ProductItem = (props) => {
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android" && Platform.Version >= 21) TouchableCmp = TouchableNativeFeedback;
+
   return (
-    <TouchableOpacity onPress={props.onViewDetail} >
+    <TouchableCmp onPress={props.onViewDetail} >
       <View style={styles.product}>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{uri: props.image}} />
@@ -18,7 +21,7 @@ const ProductItem = (props) => {
           <Button title="To Cart" color={Colors.primary} onPress={props.onAddToCart} />
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableCmp>
   );
 };
 
