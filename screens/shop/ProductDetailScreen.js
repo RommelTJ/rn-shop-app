@@ -15,6 +15,12 @@ const ProductDetailScreen = (props) => {
   );
 };
 
+ProductDetailScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: navData.navigation.getParam("productTitle")
+  };
+};
+
 const styles = StyleSheet.create({
   
 });
