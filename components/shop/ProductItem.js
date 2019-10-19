@@ -7,7 +7,7 @@ const ProductItem = (props) => {
   if (Platform.OS === "android" && Platform.Version >= 21) TouchableCmp = TouchableNativeFeedback;
 
   return (
-    <TouchableCmp onPress={props.onViewDetail} >
+    <TouchableCmp onPress={props.onViewDetail} useForeground >
       <View style={styles.product}>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{uri: props.image}} />
