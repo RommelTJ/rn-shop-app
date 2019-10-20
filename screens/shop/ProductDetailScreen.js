@@ -9,9 +9,12 @@ const ProductDetailScreen = (props) => {
   );
 
   return (
-    <View>
-      <Text>{selectedProduct.title}</Text>
-    </View>
+    <ScrollView>
+      <Image source={{uri: selectedProduct.imageUrl}} />
+      <Button title="Add to Cart" onPress={() => {}} />
+      <Text>${selectedProduct.price.toFixed(2)}</Text>
+      <Text>{selectedProduct.description}</Text>
+    </ScrollView>
   );
 };
 
