@@ -9,6 +9,7 @@ const ProductDetailScreen = (props) => {
   const selectedProduct = useSelector(state =>
     state.products.availableProducts.find(product => product.id === productId)
   );
+  const dispatch = useDispatch();
 
   return (
     <ScrollView>
