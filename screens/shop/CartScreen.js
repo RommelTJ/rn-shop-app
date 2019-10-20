@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   amount: {
-    colors: Colors.accent
+    color: Colors.accent
   }
 });
 
