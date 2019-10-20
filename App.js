@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { AppLoading } from "expo";
@@ -21,6 +21,9 @@ const fetchFonts = () => {
 };
 
 export default function App() {
+  const [fontLoaded, setFontLoaded] = useState(false);
+  if (!fontLoaded) return <AppLoading startAsync={fetchFonts} onFinish={() => setFontLoaded(true)}/>;
+
   return (
     <Provider store={store}>
       <ShopNavigator />
