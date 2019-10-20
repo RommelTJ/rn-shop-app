@@ -11,7 +11,7 @@ const CartScreen = (props) => {
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
           Total: <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text></Text>
-        <Button title={"Order Now"} />
+        <Button color={Colors.accent} title={"Order Now"} />
       </View>
       <View>
         <Text>Cart Items</Text>
