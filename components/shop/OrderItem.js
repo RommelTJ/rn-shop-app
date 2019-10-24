@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-import CartItem from "./CartItem";
 import Colors from "../../constants/Colors";
 
 const OrderItem = (props) => {
@@ -36,7 +35,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "100%"
+    width: "100%",
+    marginBottom: 15
   },
   totalAmount: {
     fontFamily: "open-sans-bold",
