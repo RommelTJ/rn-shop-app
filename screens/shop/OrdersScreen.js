@@ -12,7 +12,7 @@ const OrdersScreen = (props) => {
       data={orders}
       keyExtractor={item => item.id}
       renderItem={itemData => {
-        return <OrderItem amount={itemData.item.totalAmount} date={itemData.item.date} />;
+        return <OrderItem amount={itemData.item.totalAmount} date={itemData.item.readableDate} />;
       }}
     />
   );
