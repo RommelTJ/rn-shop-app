@@ -20,21 +20,25 @@ const OrderItem = (props) => {
           setShowDetails(prevState => !prevState);
         }}
       />
-      {showDetails && <View>
-        {
-          props.items.map(
-            cartItem => (
-              <CartItem
-                key={cartItem.productId}
-                quantity={cartItem.quantity}
-                title={cartItem.productTitle}
-                amount={cartItem.sum}
-                deletable={false}
-              />
+      {
+        showDetails && (
+          <View style={styles.detailItems}>
+          {
+            props.items.map(
+              cartItem => (
+                <CartItem
+                  key={cartItem.productId}
+                  quantity={cartItem.quantity}
+                  title={cartItem.productTitle}
+                  amount={cartItem.sum}
+                  deletable={false}
+                />
+              )
             )
-          )
-        }
-      </View>}
+          }
+          </View>
+        )
+      }
     </View>
   );
 };
@@ -70,6 +74,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "open-sans",
     color: "#888"
+  },
+  detailItems: {
+    width: "100%"
   }
 });
 
