@@ -43,7 +43,7 @@ ProductsOverviewScreen.navigationOptions = (navData) => {
   return {
     headerTitle: "All Products",
     headerLeft: (
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton} title="all-products">
         <Item
           title="Menu"
           iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
@@ -54,7 +54,7 @@ ProductsOverviewScreen.navigationOptions = (navData) => {
       </HeaderButtons>
     ),
     headerRight: (
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton} title="cart-header">
         <Item
           title="Cart"
           iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
