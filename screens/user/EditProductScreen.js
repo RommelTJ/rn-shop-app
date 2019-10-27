@@ -1,5 +1,7 @@
 import React from 'react';
-import { ScrollView, View, Text, TextInput, StyleSheet } from 'react-native';
+import {ScrollView, View, Text, TextInput, StyleSheet, Platform} from 'react-native';
+import CustomHeaderButton from "../../components/UI/HeaderButton";
+import {HeaderButtons, Item} from "react-navigation-header-buttons";
 
 const EditProductScreen = (props) => {
   return (
@@ -24,6 +26,23 @@ const EditProductScreen = (props) => {
       </View>
     </ScrollView>
   );
+};
+
+EditProductScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: navData.navigation.getParam('productId') ? 'Edit Product' : 'Add Product',
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton} title="edit-header">
+        <Item
+          title="Save"
+          iconName={Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"}
+          onPress={() => {
+
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 const styles = StyleSheet.create({
