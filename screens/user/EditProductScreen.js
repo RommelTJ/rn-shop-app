@@ -24,10 +24,12 @@ const EditProductScreen = (props) => {
           <Text style={styles.label}>Image URL</Text>
           <TextInput style={styles.input} value={imageUrl} onChangeText={text => setImageUrl(text)} />
         </View>
-        <View style={styles.formControl} >
-          <Text style={styles.label}>Price</Text>
-          <TextInput style={styles.input} value={price} onChangeText={text => setPrice(text)} />
-        </View>
+        {editedProduct ? null : (
+          <View style={styles.formControl} >
+            <Text style={styles.label}>Price</Text>
+            <TextInput style={styles.input} value={price} onChangeText={text => setPrice(text)} />
+          </View>
+        )}
         <View style={styles.formControl} >
           <Text style={styles.label}>Description</Text>
           <TextInput style={styles.input} value={description} onChangeText={text => setDescription(text)} />
