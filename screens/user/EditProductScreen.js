@@ -27,10 +27,22 @@ const EditProductScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  form: {},
-  formControl: {},
-  label: {},
-  input: {}
+  form: {
+    margin: 20
+  },
+  formControl: {
+    width: "100%"
+  },
+  label: {
+    fontFamily: "open-sans-bold",
+    marginVertical: 8
+  },
+  input: {
+    paddingHorizontal: 2,
+    paddingVertical: 5,
+    borderBottomColor: "#CCC",
+    borderBottomWidth: 1
+  }
 });
 
 export default EditProductScreen;
