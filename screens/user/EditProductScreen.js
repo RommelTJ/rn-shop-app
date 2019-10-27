@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
+import { useSelector } from "react-redux";
 import {ScrollView, View, Text, TextInput, StyleSheet, Platform} from 'react-native';
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 
 const EditProductScreen = (props) => {
-  const [title, setTitle] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const prodId = props.navigation.getParam('productId');
+  const editedProduct = useSelector(state => state.products.userProducts.find(p => p.id === prodId));
+
+  const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
+  const [imageUrl, setImageUrl] = useState(editedProduct ? editedProduct.imageUrl : '');
   const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(editedProduct ? editedProduct.description : '');
 
   return (
     <ScrollView>
