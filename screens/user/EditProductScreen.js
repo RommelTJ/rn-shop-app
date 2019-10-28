@@ -20,7 +20,7 @@ const EditProductScreen = (props) => {
     if (editedProduct) {
       dispatch(productsActions.updateProduct(prodId, title, description, imageUrl));
     } else {
-      dispatch(productsActions.createProduct(title, description, imageUrl, price));
+      dispatch(productsActions.createProduct(title, description, imageUrl, +price));
     }
   }, []);
 
