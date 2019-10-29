@@ -34,7 +34,7 @@ const EditProductScreen = (props) => {
       <View style={styles.form}>
         <View style={styles.formControl} >
           <Text style={styles.label}>Title</Text>
-          <TextInput style={styles.input} value={title} onChangeText={text => setTitle(text)} />
+          <TextInput style={styles.input} value={title} onChangeText={text => setTitle(text)} keyboardType='default' />
         </View>
         <View style={styles.formControl} >
           <Text style={styles.label}>Image URL</Text>
