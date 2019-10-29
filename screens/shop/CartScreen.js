@@ -5,7 +5,7 @@ import Colors from "../../constants/Colors";
 import CartItem from "../../components/shop/CartItem";
 import * as cartActions from "../../store/actions/cart";
 import * as ordersActions from "../../store/actions/orders";
-import Card from "react-navigation-stack/src/views/StackView/StackViewCard";
+import Card from "../../components/UI/Card";
 
 const CartScreen = (props) => {
   const cartTotalAmount = useSelector(state => state.cart.totalAmount);
