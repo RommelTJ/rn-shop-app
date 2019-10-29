@@ -43,7 +43,12 @@ const EditProductScreen = (props) => {
         {editedProduct ? null : (
           <View style={styles.formControl} >
             <Text style={styles.label}>Price</Text>
-            <TextInput style={styles.input} value={price} onChangeText={text => setPrice(text)} />
+            <TextInput
+              style={styles.input}
+              value={price}
+              onChangeText={text => setPrice(text)}
+              keyboardType='decimal-pad'
+            />
           </View>
         )}
         <View style={styles.formControl} >
