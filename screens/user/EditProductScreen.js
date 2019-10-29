@@ -41,6 +41,7 @@ const EditProductScreen = (props) => {
             keyboardType='default'
             autoCapitalize='sentences'
             autoCorrect
+            returnKeyType='next'
           />
         </View>
         <View style={styles.formControl} >
