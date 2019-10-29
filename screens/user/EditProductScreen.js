@@ -43,6 +43,7 @@ const EditProductScreen = (props) => {
             autoCorrect
             returnKeyType='next'
             onEndEditing={() => console.log("end editing")}
+            onSubmitEditing={() => console.log("submit editing")}
           />
         </View>
         <View style={styles.formControl} >
