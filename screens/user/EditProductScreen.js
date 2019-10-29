@@ -42,6 +42,7 @@ const EditProductScreen = (props) => {
             autoCapitalize='sentences'
             autoCorrect
             returnKeyType='next'
+            onEndEditing={() => console.log("end editing")}
           />
         </View>
         <View style={styles.formControl} >
