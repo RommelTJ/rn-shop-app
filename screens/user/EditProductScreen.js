@@ -10,6 +10,7 @@ const EditProductScreen = (props) => {
   const editedProduct = useSelector(state => state.products.userProducts.find(p => p.id === prodId));
 
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
+  const [titleIsValid, setTitleIsValid] = useState(false);
   const [imageUrl, setImageUrl] = useState(editedProduct ? editedProduct.imageUrl : '');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState(editedProduct ? editedProduct.description : '');
@@ -29,6 +30,15 @@ const EditProductScreen = (props) => {
     props.navigation.setParams({'submit': submitHandler})
   }, [submitHandler]);
 
+  const titleChangeHandler = (text) => {
+    if (text.trim().length === 0) {
+      setTitleIsValid(false);
+    } else {
+      setTitleIsValid(true);
+    }
+    setTitle(text);
+  };
+
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -37,7 +47,7 @@ const EditProductScreen = (props) => {
           <TextInput
             style={styles.input}
             value={title}
-            onChangeText={text => setTitle(text)}
+            onChangeText={titleChangeHandler}
             keyboardType='default'
             autoCapitalize='sentences'
             autoCorrect
@@ -45,6 +55,7 @@ const EditProductScreen = (props) => {
             onEndEditing={() => console.log("end editing")}
             onSubmitEditing={() => console.log("submit editing")}
           />
+          { !titleIsValid && <Text>Please enter a valid title.</Text> }
         </View>
         <View style={styles.formControl} >
           <Text style={styles.label}>Image URL</Text>
