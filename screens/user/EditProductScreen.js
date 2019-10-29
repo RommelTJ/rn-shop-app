@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {ScrollView, View, Text, TextInput, StyleSheet, Platform} from 'react-native';
+import {ScrollView, View, Text, TextInput, StyleSheet, Platform, Alert} from 'react-native';
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import * as productsActions from "../../store/actions/products";
@@ -18,6 +18,10 @@ const EditProductScreen = (props) => {
   const dispatch = useDispatch();
 
   const submitHandler = useCallback(() => {
+    if (!titleIsValid) {
+      Alert.alert("Wrong input!", "Please check the errors in the form.", [{text: "Ok"}]);
+      return;
+    }
     if (editedProduct) {
       dispatch(productsActions.updateProduct(prodId, title, description, imageUrl));
     } else {
