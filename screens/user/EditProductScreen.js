@@ -96,6 +96,7 @@ const EditProductScreen = (props) => {
     <ScrollView>
       <View style={styles.form}>
         <Input
+          id='title'
           label="Title"
           errorText="Please enter a valid title!"
           keyboardType="default"
@@ -108,6 +109,7 @@ const EditProductScreen = (props) => {
           required
         />
         <Input
+          id='imageUrl'
           label="Image Url"
           errorText="Please enter a valid image url!"
           keyboardType="default"
@@ -119,6 +121,7 @@ const EditProductScreen = (props) => {
         />
         {editedProduct ? null : (
           <Input
+            id='price'
             label="Price"
             errorText="Please enter a valid price!"
             keyboardType="decimal-pad"
@@ -129,6 +132,7 @@ const EditProductScreen = (props) => {
           />
         )}
         <Input
+          id='description'
           label="Description"
           errorText="Please enter a valid description!"
           keyboardType="default"

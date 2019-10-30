@@ -30,12 +30,12 @@ const Input = (props) => {
   });
 
   // useEffect makes it so the onInputChange prop function only fires after input has been touched.
-  const { onInputChange } = props;
+  const { onInputChange, id } = props;
   useEffect(() => {
     if (inputState.touched) {
-      props.onInputChange(inputState.value, inputState.isValid);
+      onInputChange(id, inputState.value, inputState.isValid);
     }
-  }, [inputState, onInputChange]);
+  }, [inputState, onInputChange, id]);
 
   const textChangeHandler = (text) => {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
