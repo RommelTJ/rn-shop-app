@@ -91,21 +91,7 @@ const EditProductScreen = (props) => {
   return (
     <ScrollView>
       <View style={styles.form}>
-        <View style={styles.formControl} >
-          <Text style={styles.label}>Title</Text>
-          <TextInput
-            style={styles.input}
-            value={formState.inputValues.title}
-            onChangeText={(text) => textChangeHandler("title", text)}
-            keyboardType='default'
-            autoCapitalize='sentences'
-            autoCorrect
-            returnKeyType='next'
-            onEndEditing={() => console.log("end editing")}
-            onSubmitEditing={() => console.log("submit editing")}
-          />
-          { !formState.inputValidities.title && <Text>Please enter a valid title.</Text> }
-        </View>
+
         <View style={styles.formControl} >
           <Text style={styles.label}>Image URL</Text>
           <TextInput
@@ -158,19 +144,6 @@ EditProductScreen.navigationOptions = (navData) => {
 const styles = StyleSheet.create({
   form: {
     margin: 20
-  },
-  formControl: {
-    width: "100%"
-  },
-  label: {
-    fontFamily: "open-sans-bold",
-    marginVertical: 8
-  },
-  input: {
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: "#CCC",
-    borderBottomWidth: 1
   }
 });
 
