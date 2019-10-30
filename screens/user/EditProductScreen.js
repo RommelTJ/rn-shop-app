@@ -83,11 +83,14 @@ const EditProductScreen = (props) => {
     props.navigation.setParams({'submit': submitHandler})
   }, [submitHandler]);
 
-  const textChangeHandler = (input, text) => {
-    let isValid = false;
-    if (text.trim().length > 0) isValid = true;
-    dispatchFormState({ type: FORM_INPUT_UPDATE, value: text, isValid, input });
-  };
+  const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
+    dispatchFormState({
+      type: FORM_INPUT_UPDATE,
+      value: inputValue,
+      isValid: inputValidity,
+      input: inputIdentifier
+    });
+  }, [dispatchFormState]);
 
   return (
     <ScrollView>
@@ -99,12 +102,18 @@ const EditProductScreen = (props) => {
           autoCapitalize="sentences"
           autoCorrect
           returnKeyType="next"
+          onInputChange={(value) => inputChangeHandler('title', value)}
+          initialValue={editedProduct ? editedProduct.title : ''}
+          initiallyValid={!!editedProduct}
         />
         <Input
           label="Image Url"
           errorText="Please enter a valid image url!"
           keyboardType="default"
           returnKeyType="next"
+          onInputChange={(value) => inputChangeHandler('imageUrl', value)}
+          initialValue={editedProduct ? editedProduct.imageUrl : ''}
+          initiallyValid={!!editedProduct}
         />
         {editedProduct ? null : (
           <Input
@@ -112,6 +121,7 @@ const EditProductScreen = (props) => {
             errorText="Please enter a valid price!"
             keyboardType="decimal-pad"
             returnKeyType="next"
+            onInputChange={(value) => inputChangeHandler('price', value)}
           />
         )}
         <Input
@@ -122,6 +132,9 @@ const EditProductScreen = (props) => {
           autoCorrect
           multiline
           numberOfLines={3}
+          onInputChange={(value) => inputChangeHandler('description', value)}
+          initialValue={editedProduct ? editedProduct.description : ''}
+          initiallyValid={!!editedProduct}
         />
       </View>
     </ScrollView>
