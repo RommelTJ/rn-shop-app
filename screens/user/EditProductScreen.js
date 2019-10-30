@@ -102,18 +102,20 @@ const EditProductScreen = (props) => {
           autoCapitalize="sentences"
           autoCorrect
           returnKeyType="next"
-          onInputChange={(value) => inputChangeHandler('title', value)}
+          onInputChange={inputChangeHandler}
           initialValue={editedProduct ? editedProduct.title : ''}
           initiallyValid={!!editedProduct}
+          required
         />
         <Input
           label="Image Url"
           errorText="Please enter a valid image url!"
           keyboardType="default"
           returnKeyType="next"
-          onInputChange={(value) => inputChangeHandler('imageUrl', value)}
+          onInputChange={inputChangeHandler}
           initialValue={editedProduct ? editedProduct.imageUrl : ''}
           initiallyValid={!!editedProduct}
+          required
         />
         {editedProduct ? null : (
           <Input
@@ -121,7 +123,9 @@ const EditProductScreen = (props) => {
             errorText="Please enter a valid price!"
             keyboardType="decimal-pad"
             returnKeyType="next"
-            onInputChange={(value) => inputChangeHandler('price', value)}
+            onInputChange={inputChangeHandler}
+            required
+            min={0.1}
           />
         )}
         <Input
@@ -132,9 +136,11 @@ const EditProductScreen = (props) => {
           autoCorrect
           multiline
           numberOfLines={3}
-          onInputChange={(value) => inputChangeHandler('description', value)}
+          onInputChange={inputChangeHandler}
           initialValue={editedProduct ? editedProduct.description : ''}
           initiallyValid={!!editedProduct}
+          required
+          minLength={5}
         />
       </View>
     </ScrollView>
