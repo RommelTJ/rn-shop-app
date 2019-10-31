@@ -96,6 +96,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: "#CCC",
     borderBottomWidth: 1
+  },
+  errorContainer: {
+    marginVertical: 5
+  },
+  errorText: {
+    fontFamily: "open-sans",
+    color: 'red',
+    fontSize: 13
   }
 });
 
