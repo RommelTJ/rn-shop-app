@@ -5,10 +5,12 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 
+const BASE_URL = "https://REDACTED.firebaseio.com";
+
 export const fetchProducts = () => {
   return async (dispatch) => {
     // any async code you want!
-    const response = await fetch('https://REDACTED.firebaseio.com/products.json');
+    const response = await fetch(`${BASE_URL}/products.json`);
     const responseData = await response.json();
     const products = [];
     for (const key in responseData) {
@@ -34,7 +36,7 @@ export const deleteProduct = (productId) => {
 export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch) => {
     // any async code you want!
-    const response = await fetch('https://REDACTED.firebaseio.com/products.json', {
+    const response = await fetch(`${BASE_URL}/products.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
