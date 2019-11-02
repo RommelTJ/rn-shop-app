@@ -11,15 +11,20 @@ import Colors from "../../constants/Colors";
 
 const ProductsOverviewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
-      await dispatch(productsActions.fetchProducts());
+      try {
+        await dispatch(productsActions.fetchProducts());
+      } catch (error) {
+        setError(error.message);
+      }
       setIsLoading(false);
-    }
+    };
     loadProducts();
   }, [dispatch]);
 
@@ -32,6 +37,14 @@ const ProductsOverviewScreen = (props) => {
       }
     );
   };
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text>An error occurred!</Text>
+      </View>
+    );
+  }
 
   if (isLoading) {
     return (

@@ -10,22 +10,32 @@ const BASE_URL = "https://REDACTED.firebaseio.com";
 export const fetchProducts = () => {
   return async (dispatch) => {
     // any async code you want!
-    const response = await fetch(`${BASE_URL}/products.json`);
-    const responseData = await response.json();
-    const products = [];
-    for (const key in responseData) {
-      products.push(
-        new Product(
-          key,
-          'u1',
-          responseData[key].title,
-          responseData[key].imageUrl,
-          responseData[key].description,
-          responseData[key].price
-        )
-      );
+    try {
+      const response = await fetch(`${BASE_URL}/products.jon`);
+
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+
+      const responseData = await response.json();
+      const products = [];
+      for (const key in responseData) {
+        products.push(
+          new Product(
+            key,
+            'u1',
+            responseData[key].title,
+            responseData[key].imageUrl,
+            responseData[key].description,
+            responseData[key].price
+          )
+        );
+      }
+      dispatch({ type: SET_PRODUCTS, products });
+    } catch (error) {
+      // Send to custom analytics server.
+      throw error;
     }
-    dispatch({ type: SET_PRODUCTS, products });
   }
 };
 
