@@ -11,7 +11,7 @@ export const fetchProducts = () => {
   return async (dispatch) => {
     // any async code you want!
     try {
-      const response = await fetch(`${BASE_URL}/products.jon`);
+      const response = await fetch(`${BASE_URL}/products.json`);
 
       if (!response.ok) {
         throw new Error('Something went wrong!');
