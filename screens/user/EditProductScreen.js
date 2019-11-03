@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useReducer } from 'react';
+import React, { useEffect, useCallback, useReducer, useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { ScrollView, View, StyleSheet, Platform, Alert, KeyboardAvoidingView } from 'react-native';
 import CustomHeaderButton from "../../components/UI/HeaderButton";
@@ -30,6 +30,9 @@ const formReducer = (state, action) => {
 const EditProductScreen = (props) => {
   const prodId = props.navigation.getParam('productId');
   const editedProduct = useSelector(state => state.products.userProducts.find(p => p.id === prodId));
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
 
   const dispatch = useDispatch();
 
