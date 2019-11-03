@@ -61,5 +61,15 @@ export const createProduct = (title, description, imageUrl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return { type: UPDATE_PRODUCT, pid: id, productData: {title, description, imageUrl} };
+  return async (dispatch) => {
+    await fetch(`${BASE_URL}/products/${id}.json`, {
+      method: 'PATCH', // PUT overrides the data, PATCH updates what you tell it
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({title, description, imageUrl})
+    });
+
+    dispatch({ type: UPDATE_PRODUCT, pid: id, productData: {title, description, imageUrl} });
+  };
 };
