@@ -56,6 +56,12 @@ const EditProductScreen = (props) => {
     }
   );
 
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error occurred", error, [{text: "Ok"}]);
+    }
+  }, [error]);
+
   const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
       Alert.alert("Wrong input!", "Please check the errors in the form.", [{text: "Ok"}]);
@@ -84,11 +90,11 @@ const EditProductScreen = (props) => {
           )
         );
       }
+      props.navigation.goBack();
     } catch(error) {
       setError(error.message);
     }
     setIsLoading(false);
-    props.navigation.goBack();
   }, [dispatch, prodId, formState]);
 
   useEffect(() => {
