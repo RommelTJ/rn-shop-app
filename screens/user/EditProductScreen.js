@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useReducer, useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { ScrollView, View, StyleSheet, Platform, Alert, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, View, StyleSheet, Platform, Alert, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import * as productsActions from "../../store/actions/products";
 import Input from "../../components/UI/Input";
+import Colors from "../../constants/Colors";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -55,30 +56,38 @@ const EditProductScreen = (props) => {
     }
   );
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
       Alert.alert("Wrong input!", "Please check the errors in the form.", [{text: "Ok"}]);
       return;
     }
-    if (editedProduct) {
-      dispatch(
-        productsActions.updateProduct(
-          prodId,
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl
-        )
-      );
-    } else {
-      dispatch(
-        productsActions.createProduct(
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl,
-          +formState.inputValues.price
-        )
-      );
+    setError(undefined);
+    setIsLoading(true);
+    try {
+      if (editedProduct) {
+        await dispatch(
+          productsActions.updateProduct(
+            prodId,
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl
+          )
+        );
+
+      } else {
+        await dispatch(
+          productsActions.createProduct(
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            +formState.inputValues.price
+          )
+        );
+      }
+    } catch(error) {
+      setError(error.message);
     }
+    setIsLoading(false);
     props.navigation.goBack();
   }, [dispatch, prodId, formState]);
 
@@ -94,6 +103,10 @@ const EditProductScreen = (props) => {
       input: inputIdentifier
     });
   }, [dispatchFormState]);
+
+  if (isLoading) {
+    return <View style={styles.centered}><ActivityIndicator size='large' color={Colors.primary}/></View>;
+  }
 
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" keyboardVerticalOffset={100}>
@@ -176,6 +189,11 @@ EditProductScreen.navigationOptions = (navData) => {
 const styles = StyleSheet.create({
   form: {
     margin: 20
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
