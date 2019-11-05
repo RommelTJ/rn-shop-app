@@ -73,7 +73,7 @@ const AuthScreen = (props) => {
               required
               email
               autoCapitalize='none'
-              errorMessage='Please enter a valid e-mail address.'
+              errorText='Please enter a valid e-mail address.'
               onInputChange={inputChangeHandler}
               initialValue=""
             />
@@ -85,7 +85,7 @@ const AuthScreen = (props) => {
               required
               minLength={5}
               autoCapitalize='none'
-              errorMessage='Please enter a valid password.'
+              errorText='Please enter a valid password.'
               onInputChange={inputChangeHandler}
               initialValue=""
             />
