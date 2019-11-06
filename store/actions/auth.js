@@ -13,9 +13,7 @@ export const signUp = (email, password) => {
       body: JSON.stringify({email, password, returnSecureToken: true})
     });
 
-    if (!response.ok) {
-      throw new Error("Something went wrong!");
-    }
+    if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
     dispatch({type: SIGN_UP});
@@ -32,11 +30,21 @@ export const logIn = (email, password) => {
       body: JSON.stringify({email, password, returnSecureToken: true})
     });
 
-    if (!response.ok) {
-      throw new Error("Something went wrong!");
-    }
+    if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
     dispatch({type: SIGN_IN});
   };
+};
+
+const errorHandler = async (response) => {
+  const errorResponse = await response.json();
+  const errorId = errorResponse.error.message;
+  let message = "Something went wrong!";
+  if (errorId === "EMAIL_NOT_FOUND") {
+    message = "This email could not be found!";
+  } else if (errorId === "INVALID_PASSWORD") {
+    message = "This password is not valid!";
+  }
+  throw new Error(message);
 };
