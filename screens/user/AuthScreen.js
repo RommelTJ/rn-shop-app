@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useState, useReducer, useCallback } from 'react';
 import { ScrollView, StyleSheet, KeyboardAvoidingView, Button, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch } from "react-redux";
@@ -31,6 +31,7 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = (props) => {
+  const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(
@@ -48,8 +49,14 @@ const AuthScreen = (props) => {
     }
   );
 
-  const signUpHandler = () => {
-    dispatch(authActions.signUp(formState.inputValues.email, formState.inputValues.password));
+  const authHandler = () => {
+    let action;
+    if (isSignUp) {
+      action = authActions.signUp(formState.inputValues.email, formState.inputValues.password);
+    } else {
+      action = authActions.logIn(formState.inputValues.email, formState.inputValues.password);
+    }
+    dispatch(action);
   };
 
   const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
@@ -91,16 +98,16 @@ const AuthScreen = (props) => {
             />
             <View style={styles.buttonContainer}>
               <Button
-                title="Login"
+                title={isSignUp ? "Sign Up" : "Login"}
                 color={Colors.primary}
-                onPress={signUpHandler}
+                onPress={authHandler}
               />
             </View>
             <View style={styles.buttonContainer}>
               <Button
-                title="Switch to Sign Up"
+                title={isSignUp ? "Switch to Log In" : "Switch to Sign Up"}
                 color={Colors.accent}
-                onPress={signUpHandler}
+                onPress={() => setIsSignUp(prevState => !prevState)} // toggles the signup
               />
             </View>
           </ScrollView>
