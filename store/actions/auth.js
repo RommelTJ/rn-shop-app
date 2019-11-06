@@ -45,6 +45,8 @@ const errorHandler = async (response) => {
     message = "This email could not be found!";
   } else if (errorId === "INVALID_PASSWORD") {
     message = "This password is not valid!";
+  } else if (message = "EMAIL_EXISTS") {
+    message = "This email exists already!";
   }
   throw new Error(message);
 };
