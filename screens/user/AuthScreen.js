@@ -1,5 +1,5 @@
-import React, { useState, useReducer, useCallback } from 'react';
-import { ScrollView, StyleSheet, KeyboardAvoidingView, Button, View, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
+import { ScrollView, StyleSheet, KeyboardAvoidingView, Button, View, ActivityIndicator, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch } from "react-redux";
 
@@ -32,6 +32,7 @@ const formReducer = (state, action) => {
 
 const AuthScreen = (props) => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -50,6 +51,12 @@ const AuthScreen = (props) => {
     }
   );
 
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error occurred!", error, [{ text: 'Ok' }]);
+    }
+  }, [error]);
+
   const authHandler = async () => {
     let action;
     if (isSignUp) {
@@ -57,8 +64,13 @@ const AuthScreen = (props) => {
     } else {
       action = authActions.logIn(formState.inputValues.email, formState.inputValues.password);
     }
+    setError(null);
     setIsLoading(true);
-    await dispatch(action);
+    try {
+      await dispatch(action);
+    } catch (error) {
+      setError(error.message);
+    }
     setIsLoading(false);
   };
 
