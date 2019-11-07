@@ -3,7 +3,7 @@ import Order from "../../models/order";
 export const ADD_ORDER = "ADD_ORDER";
 export const SET_ORDERS = "SET_ORDERS";
 
-const BASE_URL = "https://REDACTED.firebaseio.com";
+const BASE_URL = "https://rn-shop-app-c3d3c.firebaseio.com";
 
 export const fetchOrders = () => {
   return async (dispatch) => {
