@@ -35,10 +35,11 @@ export const fetchOrders = () => {
 };
 
 export const addOrder = (cartItems, totalAmount) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // any async code you want!
     const date = new Date();
-    const response = await fetch(`${BASE_URL}/orders/u1.json`, {
+    const token = getState().auth.token;
+    const response = await fetch(`${BASE_URL}/orders/u1.json?auth=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
