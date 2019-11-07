@@ -54,7 +54,8 @@ export const deleteProduct = (productId) => {
 export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch) => {
     // any async code you want!
-    const response = await fetch(`${BASE_URL}/products.json`, {
+    const token = getState().auth.token;
+    const response = await fetch(`${BASE_URL}/products.json?auth=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
