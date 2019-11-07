@@ -51,6 +51,14 @@ export const logOut = () => {
   return { type: LOGOUT };
 };
 
+const setLogoutTime = (expirationTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(logOut());
+    }, expirationTime);
+  };
+};
+
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
