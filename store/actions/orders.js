@@ -3,12 +3,13 @@ import Order from "../../models/order";
 export const ADD_ORDER = "ADD_ORDER";
 export const SET_ORDERS = "SET_ORDERS";
 
-const BASE_URL = "https://REDACTED.firebaseio.com";
+const BASE_URL = "https://rn-shop-app-c3d3c.firebaseio.com";
 
 export const fetchOrders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const response = await fetch(`${BASE_URL}/orders/u1.json`);
+      const userId = getState().auth.userId;
+      const response = await fetch(`${BASE_URL}/orders/${userId}.json`);
 
       if (!response.ok) {
         throw new Error('Something went wrong!');
@@ -35,10 +36,12 @@ export const fetchOrders = () => {
 };
 
 export const addOrder = (cartItems, totalAmount) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // any async code you want!
     const date = new Date();
-    const response = await fetch(`${BASE_URL}/orders/u1.json`, {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await fetch(`${BASE_URL}/orders/${userId}.json?auth=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

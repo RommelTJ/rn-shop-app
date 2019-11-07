@@ -5,11 +5,12 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 
-const BASE_URL = "https://REDACTED.firebaseio.com";
+const BASE_URL = "https://rn-shop-app-c3d3c.firebaseio.com";
 
 export const fetchProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // any async code you want!
+    const userId = getState().auth.userId;
     try {
       const response = await fetch(`${BASE_URL}/products.json`);
 
@@ -23,7 +24,7 @@ export const fetchProducts = () => {
         products.push(
           new Product(
             key,
-            'u1',
+            responseData[key].ownerId,
             responseData[key].title,
             responseData[key].imageUrl,
             responseData[key].description,
@@ -31,7 +32,7 @@ export const fetchProducts = () => {
           )
         );
       }
-      dispatch({ type: SET_PRODUCTS, products });
+      dispatch({ type: SET_PRODUCTS, products, userProducts: products.filter(product => product.ownerId === userId) });
     } catch (error) {
       // Send to custom analytics server.
       throw error;
@@ -40,8 +41,9 @@ export const fetchProducts = () => {
 };
 
 export const deleteProduct = (productId) => {
-  return async (dispatch) => {
-    const response = await fetch(`${BASE_URL}/products/${productId}.json`, {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const response = await fetch(`${BASE_URL}/products/${productId}.json?auth=${token}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
@@ -52,25 +54,31 @@ export const deleteProduct = (productId) => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // any async code you want!
-    const response = await fetch(`${BASE_URL}/products.json`, {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    const response = await fetch(`${BASE_URL}/products.json?auth=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({title, description, imageUrl, price})
+      body: JSON.stringify({title, description, imageUrl, price, ownerId: userId})
     });
 
     const responseData = await response.json();
 
-    dispatch({ type: CREATE_PRODUCT, productData: {id: responseData.name, title, description, imageUrl, price} });
+    dispatch({
+      type: CREATE_PRODUCT,
+      productData: {id: responseData.name, title, description, imageUrl, price, ownerId: userId}
+    });
   };
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return async (dispatch) => {
-    const response = await fetch(`${BASE_URL}/products/${id}.json`, {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const response = await fetch(`${BASE_URL}/products/${id}.json?auth=${token}`, {
       method: 'PATCH', // PUT overrides the data, PATCH updates what you tell it
       headers: {
         'Content-Type': 'application/json'
