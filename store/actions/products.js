@@ -40,8 +40,9 @@ export const fetchProducts = () => {
 };
 
 export const deleteProduct = (productId) => {
-  return async (dispatch) => {
-    const response = await fetch(`${BASE_URL}/products/${productId}.json`, {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const response = await fetch(`${BASE_URL}/products/${productId}.json?auth=${token}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
