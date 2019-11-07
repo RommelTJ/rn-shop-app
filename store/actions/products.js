@@ -5,7 +5,7 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 
-const BASE_URL = "https://REDACTED.firebaseio.com";
+const BASE_URL = "https://rn-shop-app-c3d3c.firebaseio.com";
 
 export const fetchProducts = () => {
   return async (dispatch) => {
