@@ -16,7 +16,7 @@ export const signUp = (email, password) => {
     if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
-    dispatch({type: SIGN_UP});
+    dispatch({type: SIGN_UP, token: resData.idToken, userId: resData.localId});
   };
 };
 
@@ -33,7 +33,7 @@ export const logIn = (email, password) => {
     if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
-    dispatch({type: SIGN_IN});
+    dispatch({type: SIGN_IN, token: resData.idToken, userId: resData.localId});
   };
 };
 
