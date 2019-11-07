@@ -7,8 +7,11 @@ let timer;
 
 const API_KEY = 'REDACTED';
 
-export const authenticate = (userId, token) => {
-  return {type: AUTHENTICATE, userId, token};
+export const authenticate = (userId, token, expiryTime) => {
+  return (dispatch) => {
+    dispatch(setLogoutTimer(expiryTime));
+    dispatch({type: AUTHENTICATE, userId, token});
+  }
 };
 
 export const signUp = (email, password) => {
@@ -24,7 +27,7 @@ export const signUp = (email, password) => {
     if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
-    dispatch(authenticate(resData.localId, resData.idToken));
+    dispatch(authenticate(resData.localId, resData.idToken, parseInt(resData.expiresIn) * 1000));
     const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
@@ -43,7 +46,7 @@ export const logIn = (email, password) => {
     if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
-    dispatch(authenticate(resData.localId, resData.idToken));
+    dispatch(authenticate(resData.localId, resData.idToken, parseInt(resData.expiresIn) * 1000));
     const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
