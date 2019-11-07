@@ -6,9 +6,10 @@ export const SET_ORDERS = "SET_ORDERS";
 const BASE_URL = "https://rn-shop-app-c3d3c.firebaseio.com";
 
 export const fetchOrders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const response = await fetch(`${BASE_URL}/orders/u1.json`);
+      const userId = getState().auth.userId;
+      const response = await fetch(`${BASE_URL}/orders/${userId}.json`);
 
       if (!response.ok) {
         throw new Error('Something went wrong!');
@@ -39,7 +40,8 @@ export const addOrder = (cartItems, totalAmount) => {
     // any async code you want!
     const date = new Date();
     const token = getState().auth.token;
-    const response = await fetch(`${BASE_URL}/orders/u1.json?auth=${token}`, {
+    const userId = getState().auth.userId;
+    const response = await fetch(`${BASE_URL}/orders/${userId}.json?auth=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
