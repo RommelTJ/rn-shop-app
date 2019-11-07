@@ -69,8 +69,9 @@ export const createProduct = (title, description, imageUrl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return async (dispatch) => {
-    const response = await fetch(`${BASE_URL}/products/${id}.json`, {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const response = await fetch(`${BASE_URL}/products/${id}.json?auth=${token}`, {
       method: 'PATCH', // PUT overrides the data, PATCH updates what you tell it
       headers: {
         'Content-Type': 'application/json'
