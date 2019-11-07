@@ -52,7 +52,7 @@ export const deleteProduct = (productId) => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // any async code you want!
     const token = getState().auth.token;
     const response = await fetch(`${BASE_URL}/products.json?auth=${token}`, {
