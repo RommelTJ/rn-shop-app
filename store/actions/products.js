@@ -8,8 +8,9 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 const BASE_URL = "https://rn-shop-app-c3d3c.firebaseio.com";
 
 export const fetchProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // any async code you want!
+    const userId = getState().auth.userId;
     try {
       const response = await fetch(`${BASE_URL}/products.json`);
 
@@ -31,7 +32,7 @@ export const fetchProducts = () => {
           )
         );
       }
-      dispatch({ type: SET_PRODUCTS, products });
+      dispatch({ type: SET_PRODUCTS, products, userProducts: products.filter(product => product.ownerId === userId) });
     } catch (error) {
       // Send to custom analytics server.
       throw error;
@@ -56,17 +57,21 @@ export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     // any async code you want!
     const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(`${BASE_URL}/products.json?auth=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({title, description, imageUrl, price})
+      body: JSON.stringify({title, description, imageUrl, price, ownerId: userId})
     });
 
     const responseData = await response.json();
 
-    dispatch({ type: CREATE_PRODUCT, productData: {id: responseData.name, title, description, imageUrl, price} });
+    dispatch({
+      type: CREATE_PRODUCT,
+      productData: {id: responseData.name, title, description, imageUrl, price, ownerId: userId}
+    });
   };
 };
 
