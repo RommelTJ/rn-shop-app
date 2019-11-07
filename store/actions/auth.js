@@ -1,9 +1,12 @@
 import { AsyncStorage } from 'react-native';
 
-export const SIGN_UP = "SIGN_UP";
-export const SIGN_IN = "SIGN_IN";
+export const AUTHENTICATE = "AUTHENTICATE";
 
 const API_KEY = 'REDACTED';
+
+export const authenticate = (userId, token) => {
+  return {type: AUTHENTICATE, userId, token};
+};
 
 export const signUp = (email, password) => {
   return async(dispatch) => {
@@ -18,7 +21,7 @@ export const signUp = (email, password) => {
     if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
-    dispatch({type: SIGN_UP, token: resData.idToken, userId: resData.localId});
+    dispatch(authenticate(resData.localId, resData.idToken));
     const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
@@ -37,7 +40,7 @@ export const logIn = (email, password) => {
     if (!response.ok) await errorHandler(response);
 
     const resData = await response.json();
-    dispatch({type: SIGN_IN, token: resData.idToken, userId: resData.localId});
+    dispatch(authenticate(resData.localId, resData.idToken));
     const expirationDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000);
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
