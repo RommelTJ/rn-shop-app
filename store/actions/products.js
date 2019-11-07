@@ -24,7 +24,7 @@ export const fetchProducts = () => {
         products.push(
           new Product(
             key,
-            'u1',
+            responseData[key].ownerId,
             responseData[key].title,
             responseData[key].imageUrl,
             responseData[key].description,
