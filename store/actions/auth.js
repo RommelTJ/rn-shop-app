@@ -3,6 +3,8 @@ import { AsyncStorage } from 'react-native';
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
 
+let timer;
+
 const API_KEY = 'REDACTED';
 
 export const authenticate = (userId, token) => {
@@ -48,12 +50,20 @@ export const logIn = (email, password) => {
 };
 
 export const logOut = () => {
+  clearLogoutTimer();
+  AsyncStorage.removeItem("userData");
   return { type: LOGOUT };
 };
 
-const setLogoutTime = (expirationTime) => {
+const clearLogoutTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+  }
+};
+
+const setLogoutTimer = (expirationTime) => {
   return (dispatch) => {
-    setTimeout(() => {
+    timer = setTimeout(() => {
       dispatch(logOut());
     }, expirationTime);
   };
